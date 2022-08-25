@@ -1,5 +1,7 @@
 package ar.utn.frbb.tup.TrabajoFinal.model;
 
+import org.springframework.lang.Nullable;
+
 public class Producto implements Comparable <Producto>{
 
     private String id;
@@ -12,6 +14,7 @@ public class Producto implements Comparable <Producto>{
     private static final double descuentoOnline = 0.15;
     private boolean configurable;
     private String configuracion;
+    private String categoria;
 
     public Producto(String id, String marca, String modelo, String descripcion, double precioLista) {
         this.id = id;
@@ -23,6 +26,7 @@ public class Producto implements Comparable <Producto>{
         this.precioContado = precioLista - (precioLista * descuentoOnline);
         this.ventaOnline = false;
         this.configurable = false;
+        this.categoria = "";
     }
 
     public Producto(String marca, int precioLista){
@@ -35,6 +39,7 @@ public class Producto implements Comparable <Producto>{
         this.ventaOnline = false;
         this.configurable = false;
         this.configuracion = "";
+        this.categoria = "";
     }
 
     public Producto(){}
@@ -87,6 +92,14 @@ public class Producto implements Comparable <Producto>{
         this.configuracion = configuracion;
     }
 
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
     public String getId() {
         return id;
     }
@@ -103,6 +116,37 @@ public class Producto implements Comparable <Producto>{
         this.marca = marca;
     }
 
+    public boolean hasThisMarca(@Nullable String marca){
+        if (marca == null){return true;}
+        if (getMarca().equalsIgnoreCase(marca))return true;
+        else return false;
+    }
+    public boolean hasThisModelo(@Nullable String modelo){
+        if (modelo == null){return true;}
+        if (getModelo().equalsIgnoreCase(modelo))return true;
+        else return false;
+    }
+    public boolean hasThisCategoria(@Nullable String categoria){
+        if (categoria == null){return true;}
+        if (getCategoria().equalsIgnoreCase(categoria))return true;
+        else return false;
+    }
+    public boolean hasThisAtributes( @Nullable String marca, @Nullable String modelo){
+        // MARCA modelo categoria
+        if (marca != null && modelo != null) {
+            if (getMarca().equalsIgnoreCase(marca) && getModelo().equalsIgnoreCase(modelo))
+            return true;
+        }
+        if (marca != null){
+            if (getMarca().equalsIgnoreCase(marca))return true;
+            else return false;
+        }
+        if (modelo != null){
+            if (getModelo().equalsIgnoreCase(modelo))return true;
+            else return false;
+        }
+        return false;
+    }
     @Override
     public int compareTo(Producto x) {
         return this.getMarca().compareTo(x.getMarca());

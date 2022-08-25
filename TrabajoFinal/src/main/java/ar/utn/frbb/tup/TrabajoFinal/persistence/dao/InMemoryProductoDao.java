@@ -4,6 +4,7 @@ import ar.utn.frbb.tup.TrabajoFinal.model.Categoria;
 import ar.utn.frbb.tup.TrabajoFinal.model.Producto;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 @Component
@@ -15,9 +16,6 @@ public class InMemoryProductoDao {
         return p;
     }
 
-    // Gracias a este metodo me ahorro la iteracion en cada funcion
-    // que necesite recorren la memoria y directamente pido
-    // por parametros el objeto en cuestion buscado y encontrado.
     public Producto findProductoInCategoria(String id,Categoria c){
         if (c.getListaProductos().size() == 0){throw new RuntimeException("No hay productos en esa categoria");}
         for (Producto producto : c.getListaProductos()) {
@@ -39,5 +37,7 @@ public class InMemoryProductoDao {
             return false;
         }
     }
+
+
 
 }

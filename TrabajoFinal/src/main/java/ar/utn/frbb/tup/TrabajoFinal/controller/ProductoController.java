@@ -12,6 +12,8 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 public class ProductoController {
@@ -53,11 +55,16 @@ public class ProductoController {
         return productoBusiness.searchProductoById(dto);
     }
 
-    //Consultar un producto por alguno de sus atributos: tipo, marca, categoria
-    //GET: /producto?marca=samsung&modelo=a12&cateogoria=ATV
-    /*
+
     @GetMapping(value = "/producto")
-    public Producto getPorAtributos(@RequestParam(value = "marca")
-    */
+    public List<Producto> getProductoByQuerys(@RequestParam(required = false) Map<String,String> qparams) {
+        if (qparams.size() == 0){return productoBusiness.displayAllProductos();}
+        for (String s: qparams.keySet()) {
+            if (!(s.equals("Marca") || s.equals("Modelo") || s.equals("Categoria")) ){
+                System.out.println("mal querys");
+            }
+        }
+        return productoBusiness.searchProductByQuerys(qparams);
+    }
 
 }
