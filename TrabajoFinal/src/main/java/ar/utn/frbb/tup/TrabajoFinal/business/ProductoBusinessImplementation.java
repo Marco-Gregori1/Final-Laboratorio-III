@@ -10,6 +10,14 @@ import ar.utn.frbb.tup.TrabajoFinal.dto.AltaProductoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.sql.rowset.serial.SerialStruct;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 @Component
 public class ProductoBusinessImplementation {
 
@@ -29,6 +37,7 @@ public class ProductoBusinessImplementation {
         p.setPrecioLista(dto.getPrecioLista());
         p.setVentaOnline(false);
         p.setConfigurable(false);
+        p.setCategoria(catDto.getNombre());
         // Acceder a la lista de Categorias para guardar dentro de esta el producto
         Categoria c = catDao.findCategoria(catDto.getId());
         dao.save(p,c);
@@ -51,6 +60,15 @@ public class ProductoBusinessImplementation {
             else{return false;}
     }
 
+    public ArrayList<Producto> displayAllProductos (){
+        ArrayList<Producto> results = new ArrayList<>();
+        for (Categoria c:catDao.displayCategorias()) {
+            results.addAll(c.getListaProductos());
+        }
+        return results;
+    }
+
+
     public Producto searchProductoById(AltaProductoDto dto){
         for (Categoria categoria: catDao.displayCategorias()) {
             for (Producto producto : categoria.getListaProductos()){
@@ -59,6 +77,20 @@ public class ProductoBusinessImplementation {
                 }
             }
         }
-        throw new RuntimeException("No se encontro el producto en ninguna categoria");
+        throw new RuntimeException("No se encontro el producto en ninguna categoria");}
+
+
+    public List<Producto> searchProductByQuerys(Map querys){
+
+        // Gracias a que los comparadores de atributos permiten pasar variables nulas por parametro puedo hacer un filter general
+        // y no uno por cada combinacion de querys pasada por el controllorer
+
+        List<Producto> filtered = displayAllProductos().stream()
+                .filter(Producto -> Producto.hasThisMarca((String) querys.get("Marca")) && Producto.hasThisModelo((String) querys.get("Modelo")) && Producto.hasThisCategoria((String) querys.get("Categoria")))
+                .collect(Collectors.toList());
+
+        return filtered;
     }
+
+
 }

@@ -49,5 +49,4 @@ public class ProductoBusinessTest {
         assertEquals(1, cat.getListaProductos().size());
     }
 
-
 }

@@ -14,6 +14,7 @@ public class AltaProductoDto {
     private String configuracion;
 // marca modelo precioLista precioContado ventaOnline configurable
 
+
     public AltaProductoDto(String marca, String modelo, double precioLista) {
         this.marca = marca;
         this.modelo = modelo;
