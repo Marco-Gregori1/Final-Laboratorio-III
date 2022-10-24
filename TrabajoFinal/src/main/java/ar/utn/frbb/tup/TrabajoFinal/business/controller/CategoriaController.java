@@ -1,11 +1,15 @@
-package ar.utn.frbb.tup.TrabajoFinal.controller;
+package ar.utn.frbb.tup.TrabajoFinal.business.controller;
+
 
 import ar.utn.frbb.tup.TrabajoFinal.business.CategoriaBusinessImplementation;
 import ar.utn.frbb.tup.TrabajoFinal.dto.AltaCategoriaDto;
 import ar.utn.frbb.tup.TrabajoFinal.model.Categoria;
 import ar.utn.frbb.tup.TrabajoFinal.model.Producto;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -18,6 +22,7 @@ public class CategoriaController {
     @Autowired
     CategoriaBusinessImplementation categoriaBusiness;
 
+    ObjectMapper mapper = new ObjectMapper();
     // CRUD Basico
 
     // GET Con querys
@@ -53,7 +58,10 @@ public class CategoriaController {
         return categoriaBusiness.displayCategoria(dto);}
 
     @PostMapping(value = "/categoria/creator",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Categoria crearCategoria(@RequestBody AltaCategoriaDto dto){return categoriaBusiness.altaCategoria(dto);}
+    public ResponseEntity crearCategoria(@RequestBody AltaCategoriaDto dto){
+        //return categoriaBusiness.altaCategoria(dto);
+        return new ResponseEntity<Object>(categoriaBusiness.altaCategoria(dto), HttpStatus.OK);
+    }
 
     @PutMapping(value = "/categoria/{id}")
     public Categoria editarCategoria(@RequestBody AltaCategoriaDto dto , @PathVariable String id){

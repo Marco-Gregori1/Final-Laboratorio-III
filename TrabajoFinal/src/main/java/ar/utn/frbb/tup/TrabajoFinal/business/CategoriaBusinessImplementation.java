@@ -5,6 +5,7 @@ import ar.utn.frbb.tup.TrabajoFinal.model.Categoria;
 import ar.utn.frbb.tup.TrabajoFinal.model.Producto;
 import ar.utn.frbb.tup.TrabajoFinal.persistence.dao.InMemoryCategoriaDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +24,6 @@ public class CategoriaBusinessImplementation {
     InMemoryCategoriaDao dao;
 
     // TODO Desarrolar excepciones generales para todos los metodos
-
     public Categoria altaCategoria(AltaCategoriaDto dto){
         Categoria c = new Categoria();
         c.setNombre(dto.getNombre());
