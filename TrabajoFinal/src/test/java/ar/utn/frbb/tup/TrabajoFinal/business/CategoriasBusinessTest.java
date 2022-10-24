@@ -24,33 +24,24 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-
 @SpringBootTest
-public class ProductoBusinessTest {
-
-    @Mock
-    private InMemoryProductoDao prodDao;
+public class CategoriasBusinessTest {
 
     @Mock
     private InMemoryCategoriaDao catDao;
 
     @InjectMocks
-    private ProductoBusinessImplementation prodBusiness;
-
+    private CategoriaBusinessImplementation catBusiness;
 
     @Test
-    public void test_altaProducto_OK(){
+    public void test_altaCategoria_OK(){
 
         // Se crea categoria y Dto de esta
         Categoria cat = new Categoria("id","123","a");
         AltaCategoriaDto catDto = new AltaCategoriaDto(cat.getNombre(),cat.getDescripcion());
         catDto.setId("id");
 
-        // Se crea producto
-        AltaProductoDto dto = new AltaProductoDto("LG", "A0H234", 17000);
-
-        Mockito.when(prodBusiness.altaProdcto(dto,catDto)).thenReturn(new Producto());
-        assertNotNull(prodBusiness.displayAllProductos());
+        Mockito.when(catBusiness.altaCategoria(catDto)).thenReturn(new Categoria());
+        assertNotNull(catBusiness.displayCategorias());
     }
-
 }

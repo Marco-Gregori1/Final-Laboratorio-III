@@ -63,12 +63,10 @@ public class Categoria {
         this.listaProductos = listaProductos;
     }
 
-    // Metodos
 
     public void agregarProducto(Producto producto){
         listaProductos.add(producto);
     }
-    // testear este
 
     public void listarProductos (){
         for (Producto producto : listaProductos){

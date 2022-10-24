@@ -1,4 +1,4 @@
-package ar.utn.frbb.tup.TrabajoFinal.controller;
+package ar.utn.frbb.tup.TrabajoFinal.business.controller;
 
 
 
